@@ -1,0 +1,19 @@
+# Compiled files
+*.o
+*.out
+*.exe
+
+# Executables
+main
+program
+
+# Backup files
+*~
+*.swp
+
+# VS Code
+.vscode/
+
+# Temporary
+*.tmp
+
