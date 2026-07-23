@@ -74,3 +74,29 @@ void start_server()
     close(server_fd);
 }
 
+char username[50];
+char password[50];
+
+sscanf(buffer,
+       "%49[^:]:%49s",
+       username,
+       password);
+
+char reply[BUFFER_SIZE];
+
+if (strcmp(username, "admin") == 0 &&
+    strcmp(password, "password123") == 0)
+{
+    strcpy(reply,
+           "Authentication Successful");
+}
+else
+{
+    strcpy(reply,
+           "Authentication Failed");
+}
+
+send(client_socket,
+     reply,
+     strlen(reply),
+     0);
