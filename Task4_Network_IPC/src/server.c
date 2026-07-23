@@ -13,7 +13,6 @@ void start_server()
     int client_socket;
 
     struct sockaddr_in address;
-
     int addrlen = sizeof(address);
 
     char buffer[BUFFER_SIZE] = {0};
@@ -39,7 +38,12 @@ void start_server()
         return;
     }
 
-    listen(server_fd, 3);
+    if (listen(server_fd, 3) < 0)
+    {
+        printf("Listen failed.\n");
+        close(server_fd);
+        return;
+    }
 
     printf("\n=====================================\n");
     printf(" Server started on port %d\n", PORT);
@@ -63,7 +67,26 @@ void start_server()
 
     printf("\nClient says: %s\n", buffer);
 
-    char reply[] = "Authentication Successful";
+    /* Authentication */
+
+    char username[50];
+    char password[50];
+    char reply[BUFFER_SIZE];
+
+    sscanf(buffer,
+           "%49[^:]:%49s",
+           username,
+           password);
+
+    if (strcmp(username, "admin") == 0 &&
+        strcmp(password, "password123") == 0)
+    {
+        strcpy(reply, "Authentication Successful");
+    }
+    else
+    {
+        strcpy(reply, "Authentication Failed");
+    }
 
     send(client_socket,
          reply,
@@ -73,30 +96,3 @@ void start_server()
     close(client_socket);
     close(server_fd);
 }
-
-char username[50];
-char password[50];
-
-sscanf(buffer,
-       "%49[^:]:%49s",
-       username,
-       password);
-
-char reply[BUFFER_SIZE];
-
-if (strcmp(username, "admin") == 0 &&
-    strcmp(password, "password123") == 0)
-{
-    strcpy(reply,
-           "Authentication Successful");
-}
-else
-{
-    strcpy(reply,
-           "Authentication Failed");
-}
-
-send(client_socket,
-     reply,
-     strlen(reply),
-     0);
