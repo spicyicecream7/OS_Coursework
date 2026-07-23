@@ -1,19 +1,20 @@
-# Compiled files
-*.o
-*.out
-*.exe
+# Compiled executables
+task1
+task2
+task3
+task4
 
-# Executables
-main
-program
+# Object files
+*.o
 
 # Backup files
 *~
-*.swp
 
 # VS Code
 .vscode/
 
-# Temporary
-*.tmp
+# Build folders
+build/
 
+# Temporary files
+*.tmp
